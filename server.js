@@ -1,4 +1,5 @@
 const express = require('express');
+const connectDB = require('./config/db');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -9,25 +10,8 @@ const posts = require('./routes/api/posts');
 
 const app = express();
 
-// Body-parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// DB Config
-const db = require('./config/keys').mongoURI;
-
-// Connect to MongoDB
-// Using the .then() and .catch() are how to use promises
-mongoose
-  .connect(db)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
-
-// Passport middleware
-app.use(passport.initialize());
-
-// Passport Config
-require('./config/passport')(passport);
+// Connect Databse
+connectDB();
 
 // Use Routes
 app.use('/api/users', users);
