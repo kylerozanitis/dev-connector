@@ -121,7 +121,7 @@ router.post(
 router.get('/', async (req, res) => {
   try {
     const profiles = await Profile.find().populate({
-      model: 'users',
+      model: 'user',
       path: 'user',
       select: ['name', 'avatar']
     });
@@ -139,7 +139,7 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id
-    }).populate({ model: 'users', path: 'user', select: ['name', 'avatar'] });
+    }).populate({ model: 'user', path: 'user', select: ['name', 'avatar'] });
 
     if (!profile) return res.status(400).json({ msg: 'Profile not found' });
 
